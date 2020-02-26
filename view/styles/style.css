@@ -74,6 +74,15 @@ section {
     margin-bottom: 50px;
 }
 
+footer {
+  width: 100%;
+  margin-top: 100px;
+}
+#copyright {
+  padding-right: 50px;
+  float: right;
+}
+
 @keyframes fadeOut {
   0% {
     opacity: 1;

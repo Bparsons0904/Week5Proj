@@ -1,16 +1,15 @@
 <?php
     // DB variables set to required settings
     $dsn = 'mysql:host=localhost;dbname=todolist';
-    $username = 'mgs_user';
-    $password = 'pa55word';
+    $username = 'root';
 
     // Try DBO connection
     try {
-        $db = new PDO($dsn, $username, $password);
+        $db = new PDO($dsn, $username);
     } catch (PDOException $e) {
         // Display error message
         $error_message = $e->getMessage();
-        include('error.html');
+        include('./errors/database_error.php');
         exit();
     }
 ?>

@@ -1,65 +1,87 @@
 <?php
-require_once('db.php');
-
-// Check if GET and delete type - Delete task
-if(!empty($_GET['type']) && $_GET['type'] === 'delete'){
-    // Set variable to primary key value
-    $itemNum = filter_input(INPUT_GET, 'itemNum');
-    // If id is null report error
-    if ($itemNum == null) {
-        header("LOCATION: index.php?type=error");
-    // Delete task from db
-    } else {
-        // Set query to delete based on itemNum primary key
-        $query = 'DELETE FROM todoitems WHERE ItemNum = :itemNum';
-        $statement = $db->prepare($query);
-        // PDO Binding of variables
-        $statement->bindValue(':itemNum', $itemNum);
-        $statement->execute();
-        $statement->closeCursor();
-        // Display success message
-        header("LOCATION: index.php?type=success");
+require('./model/db.php');
+require('./model/item_db.php');
+require('./model/category_db.php');
+$action = filter_input(INPUT_POST, 'action');
+if ($action == NULL) {
+    $action = filter_input(INPUT_GET, 'action');
+    if ($action == NULL) {
+        $action = 'list-items';
     }
-// No delete called, get all items from database
-} else {
-    // Set query to get all items from database
-    $query = 'SELECT * FROM todoitems';
-    $statement = $db->prepare($query);
-    $statement->execute();
-    $items = $statement->fetchAll();
-    $statement->closeCursor(); 
 }
+
+if ($action == 'list-items') {
+    $category_id = filter_input(INPUT_GET, 'category_id', 
+            FILTER_VALIDATE_INT);
+    $category_name = get_category_name($category_id);
+    $categories = get_categories();
+    $items = get_items_by_category($category_id);
+    $main = 'toDoList.php';
+} else if ($action == 'delete_item') {
+    $item_id = filter_input(INPUT_POST, 'item_id', 
+            FILTER_VALIDATE_INT);
+    $category_id = filter_input(INPUT_POST, 'category_id', 
+            FILTER_VALIDATE_INT);
+            echo "Item id: " . $item_id . "\n";
+            echo "Cat id: " . $category_id . "\n";
+    if ($category_id == NULL || $category_id == FALSE ||
+            $item_id == NULL || $item_id == FALSE) {
+        $error = "Missing or incorrect item id or category id.";
+        include('../errors/error.php');
+        echo $error;
+        echo $item_id;
+        echo $category_id;
+        $main = 'toDoList.php';
+    } else { 
+        delete_item($item_id);
+        header("Location: .?category_id=$category_id");
+    }
+} else if ($action == 'additem') {
+    $items = get_items_by_category(NULL);
+    $categories = get_categories();
+    $main = 'additem.php';    
+} else if ($action == 'add_item') {
+    $title = filter_input(INPUT_POST, 'title_form');
+    $description = filter_input(INPUT_POST, 'description');
+    $category_id = filter_input(INPUT_POST, 'category_id', 
+            FILTER_VALIDATE_INT);
+    if ($category_id == NULL || $category_id == FALSE || $title == NULL || 
+            $description == NULL) {
+        $error = "Invalid product data. Check all fields and try again.";
+        // include('../errors/error.php');
+        echo "Add error";
+    } else { ;
+        add_item($title, $description, $category_id);
+        // $main = 'toDoList.php';
+        header("Location: .?category_id=$category_id");
+    }
+} else if ($action == 'list_categories') {
+    $categories = get_categories();
+    $main = 'categoryList.php';
+} else if ($action == 'add_category') {
+    $name = filter_input(INPUT_POST, 'name');
+
+    // Validate inputs
+    if ($name == NULL) {
+        $error = "Invalid category name. Check name and try again.";
+        include('view/error.php');
+    } else {
+        echo "Add success";
+        add_category($name);
+        header('Location: .?action=list_categories');  
+    }
+} else if ($action == 'delete_category') {
+    $category_id = filter_input(INPUT_POST, 'category_id', 
+            FILTER_VALIDATE_INT);
+    delete_category($category_id);
+    header('Location: .?action=list_categories');      // display the Category List page
+}
+
+
 ?>
-
 <!-- Display core of html head and nav -->
-<?php include('pages/header.html'); ?>
-
-<!-- Display content based on get/post/empty list -->
-<section class="container">
-    <?php 
-        // Display success/fail message based on GET type
-        if (isset($_GET['type'])) {
-        switch ($_GET['type']) {
-            case 'success':
-                include('pages/success.html');
-                break;
-            case 'error':
-                include('pages/error.html');
-                break;
-            }
-        }
-        // Display add item if get page set to get or post
-        if ((isset($_GET['page']) && $_GET['page'] == 'additem') || (isset($_POST['type']) && $_POST['type'] == 'add')) { 
-            include('pages/additem.php');
-        // Display emptylist if num of rows in db is 0
-        } else if ($statement->rowCount() === 0) {
-            include('pages/emptyList.html');
-        // Display list of tasks
-        } else {
-            include('pages/toDoList.php');
-        }
-    ?>
-</section>
-</body>
-
-</html>
+<?php include('view/header.html'); ?>
+<!-- <?php include('toDoList.php') ?> -->
+<?php include($main) ?>
+<?php include('view/footer.php'); ?>
+<?php echo $action; ?>
