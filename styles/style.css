@@ -1,0 +1,88 @@
+a {
+  text-decoration: none !important;
+}
+
+header {
+  background-color: #111111;
+  max-height: 80px;
+}
+
+figure {
+  padding: 10px;
+}
+
+figure img {
+  height: 60px;
+  margin-left: 25px;
+}
+
+#title {
+  line-height: 80px;
+  color: #eee;
+}
+
+.form-control:focus {
+  border-color: #FFAF06;
+  box-shadow: 0 0 0 0.2rem rgba(255, 176, 6, 0.657);
+}
+
+section {
+  margin-top: 50px;
+}
+
+.button-add {
+  color: #eee;
+  font-weight: 600;
+  background-color: rgb(16, 102, 16);
+  padding: 10px;
+  width: 150px;
+  border-radius: 30px;
+  float: right;
+}
+
+.button-add:hover {
+  color: rgb(16, 102, 16);
+  background-color: #fff;
+  border: 1px rgb(16, 102, 16) solid;
+}
+
+.button-add span {
+  margin-left: 15px;
+}
+
+.fa-check-square {
+  color: rgb(16, 102, 16);
+}
+
+#error {
+  color: red;
+  width: 100%;
+  padding-bottom: 50px;
+  animation: fadeOut 3s;
+  opacity: 0;
+}
+
+#success {
+  color: green;
+  width: 100%;
+  padding-bottom: 50px;
+  animation: fadeOut 3s;
+  opacity: 0;
+}
+
+#add-form {
+    margin-bottom: 50px;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  60% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
