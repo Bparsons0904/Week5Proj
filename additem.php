@@ -1,3 +1,4 @@
+<h3 class="text-center" id="add-item-list">Add Item to the To Do List</h3>
 <form method="POST" id="add-form">
   <div class="form-group">
     <label for="title_form">Title</label>
@@ -10,19 +11,19 @@
   <div class="form-group" >
     <label for="category_id">Category</label>
     <select name="category_id" id="categoryID">
-    <?php foreach ( $categories as $category ) : ?>
-            <option value="<?php echo $category['categoryID']; ?>">
-                <?php echo $category['categoryName']; ?>
-            </option>
+      <!-- Loop through each category and display as option -->
+      <?php foreach ( $categories as $category ) : ?>
+        <option value="<?php echo $category['categoryID']; ?>">
+          <?php echo $category['categoryName']; ?>
+        </option>
         <?php endforeach; ?>
     </select>
     
   </div> 
   <input type="hidden" name="action" value="add_item">
-  <div class="row">
-    <button type="submit" class="ml-auto button-add" ><i class="fas fa-plus"></i><span>Add Task</span></button>
-  </div>
+    <div class="row">
+      <button type="submit" class="ml-auto button-add" >
+        <i class="fas fa-plus"></i><span>Add To Do Item</span>
+      </button>
+    </div>
 </form>
-
-<!-- Display current list of tasks -->
-<?php include ("toDoList.php"); ?>

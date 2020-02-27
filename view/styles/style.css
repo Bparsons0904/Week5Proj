@@ -4,16 +4,16 @@ a {
 
 header {
   background-color: #111111;
-  max-height: 80px;
+  /* max-height: 80px; */
 }
 
 figure {
-  padding: 10px;
+  padding: 15px;
 }
 
 figure img {
-  height: 60px;
-  margin-left: 25px;
+  max-height: 100%;
+  padding-left: 25px;
 }
 
 #title {
@@ -21,9 +21,25 @@ figure img {
   color: #eee;
 }
 
+nav {
+  color: #fff;
+}
+
+.top-btn {
+  margin: 5px;
+}
+
 .form-control:focus {
   border-color: #FFAF06;
   box-shadow: 0 0 0 0.2rem rgba(255, 176, 6, 0.657);
+}
+
+#cat-drop-down h3 {
+  margin-left: 25px;
+}
+
+#cat-change {
+  padding: 25px;
 }
 
 section {
@@ -35,7 +51,7 @@ section {
   font-weight: 600;
   background-color: rgb(16, 102, 16);
   padding: 10px;
-  width: 150px;
+  /* width: 150px; */
   border-radius: 30px;
   float: right;
 }
@@ -54,20 +70,47 @@ section {
   color: rgb(16, 102, 16);
 }
 
+.fa-trash-alt {
+  color: red;
+}
+
+#cat-header {
+  padding: 20px;
+}
 #error {
   color: red;
   width: 100%;
-  padding-bottom: 50px;
-  animation: fadeOut 3s;
-  opacity: 0;
+  padding: 50px;
+}
+
+#no-tasks {
+  padding: 50px;
+}
+hr {
+  border-color: #FFAF06;
+  border-width: 2px;
+  margin: 25px;
+  width: 90%;
+}
+
+#add-category {
+  width: 80;
+}
+
+#add-category-input {
+  width: 50%;
 }
 
 #success {
   color: green;
   width: 100%;
-  padding-bottom: 50px;
+  padding: 25px;
   animation: fadeOut 3s;
   opacity: 0;
+}
+
+#add-item-list {
+  margin: 25px;
 }
 
 #add-form {
@@ -76,11 +119,8 @@ section {
 
 footer {
   width: 100%;
-  margin-top: 100px;
-}
-#copyright {
-  padding-right: 50px;
-  float: right;
+  margin: 50px;
+
 }
 
 @keyframes fadeOut {
